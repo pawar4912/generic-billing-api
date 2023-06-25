@@ -9,7 +9,7 @@ import {
 import { AdminUsersService } from './admin-users.service';
 import { CreateAdminUserDto } from './dto/create-admin-user.dto';
 import { Public } from '../auth/public-endpoint.decorator';
-import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { AdminUserLocalAuthGuard } from '../auth/admin-user-local-auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { AdminUserRefreshTokenGuard } from '../auth/admin-user-refresh-token.guard';
@@ -18,6 +18,7 @@ import { AdminUserJwtAuthGuard } from '../auth/admin-user-jwt.guard';
 @ApiBearerAuth()
 @UseGuards(AdminUserJwtAuthGuard)
 @Controller('admin-users')
+@ApiTags('Admin Users')
 export class AdminUsersController {
   constructor(
     private readonly adminUsersService: AdminUsersService,
