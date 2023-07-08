@@ -1,16 +1,20 @@
 import {
+  Body,
   ConflictException,
   HttpException,
   HttpStatus,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  Param,
+  Patch,
 } from '@nestjs/common';
 import { CreateAdminUserDto } from './dto/create-admin-user.dto';
 import { hash } from 'bcrypt';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { AdminUser, AdminUserDocument } from './schemas/admin-users.schema';
+import { UpdateAdminUserDto } from './dto/update-admin-user.dto';
 
 @Injectable()
 export class AdminUsersService {
@@ -60,5 +64,13 @@ export class AdminUsersService {
       throw new NotFoundException(`Admin users with email ${email} not found`);
     }
     return adminUser;
+  }
+
+  async findByIdAndUpdate(id: string, updateAdminDto: UpdateAdminUserDto) {
+    return await this.adminUserModel.findByIdAndUpdate({_id: id}, updateAdminDto, {new: true})
+    .then(async (AdminUser) => {
+      return AdminUser;
+    })
+    
   }
 }

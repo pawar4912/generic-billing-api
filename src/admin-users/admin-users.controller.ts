@@ -5,6 +5,9 @@ import {
   UseGuards,
   Request,
   Get,
+  Put,
+  Patch,
+  Param,
 } from '@nestjs/common';
 import { AdminUsersService } from './admin-users.service';
 import { CreateAdminUserDto } from './dto/create-admin-user.dto';
@@ -14,6 +17,7 @@ import { AdminUserLocalAuthGuard } from '../auth/admin-user-local-auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { AdminUserRefreshTokenGuard } from '../auth/admin-user-refresh-token.guard';
 import { AdminUserJwtAuthGuard } from '../auth/admin-user-jwt.guard';
+import { UpdateAdminUserDto } from './dto/update-admin-user.dto';
 
 @ApiBearerAuth()
 @UseGuards(AdminUserJwtAuthGuard)
@@ -24,10 +28,17 @@ export class AdminUsersController {
     private readonly adminUsersService: AdminUsersService,
     private readonly authService: AuthService,
   ) {}
-
+  
+  @Public()
   @Post('register')
   register(@Body() createAdminUserDto: CreateAdminUserDto) {
     return this.adminUsersService.create(createAdminUserDto);
+  }
+
+  @Public()
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminUserDto) {
+    return this.adminUsersService.findByIdAndUpdate(id, updateAdminDto);
   }
 
   @Public()
