@@ -22,9 +22,4 @@ export class UpdateAdminUserDto extends PartialType(CreateAdminUserDto) {
     @ApiProperty()
     @IsString()
     password: string;
-
-    @ApiProperty()
-    @IsString()
-    organizationName: string;
-
 }

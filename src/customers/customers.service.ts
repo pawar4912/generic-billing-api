@@ -18,6 +18,7 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { CustomerUser, CustomerUserDocument } from './schemas/customers.schema';
 import { hash } from 'bcrypt';
+import { BlockCustomerDto } from './dto/block-customer.dto';
 
 @Injectable()
 export class CustomersService {
@@ -61,20 +62,34 @@ export class CustomersService {
       });
   }
 
+  //find all users
   async findAll(): Promise < CustomerUserDocument[] > {
     return this.customerUserModel.find()
       .exec();
   }
 
+  //find user by id
   async findOne(id: string) {
     return this.customerUserModel.findById(id);
   }
 
+  //update user by id 
   async update(id: string, updateEmployeeDto: UpdateCustomerDto): Promise < CustomerUserDocument > {
     return this.customerUserModel.findByIdAndUpdate(id, updateEmployeeDto);
   }
 
+  // reomve user by id
   async remove(id: string) {
     return this.customerUserModel.findByIdAndRemove(id);
+  }
+
+  // remove all user data from database after deleting user from database
+  async removeAllMetaDataforUser(id: string){
+
+  }
+
+  //update user by id 
+  async BlockCustomerDto(id: string, updateEmployeeDto: BlockCustomerDto): Promise < CustomerUserDocument > {
+    return this.customerUserModel.findByIdAndUpdate(id, updateEmployeeDto);
   }
 }

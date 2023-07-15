@@ -29,6 +29,9 @@ export class AdminUser {
 
   @Prop({ default: '' ,unique: true })
   cellNumber: string;
+
+  @Prop( {default: ''})
+  organizationName: string
 }
 
 export const AdminUserSchema = SchemaFactory.createForClass(AdminUser);
