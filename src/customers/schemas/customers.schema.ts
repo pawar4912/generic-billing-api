@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, ObjectId } from 'mongoose';
 import { Transform, Exclude } from 'class-transformer';
 
-export type AdminUserDocument = AdminUser & Document;
+export type CustomerUserDocument = CustomerUser & Document;
 
 @Schema({
   timestamps: true,
@@ -10,7 +10,7 @@ export type AdminUserDocument = AdminUser & Document;
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
 })
-export class AdminUser {
+export class CustomerUser {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
@@ -29,6 +29,15 @@ export class AdminUser {
 
   @Prop({ default: '' ,unique: true })
   cellNumber: string;
+
+  @Prop({ default: '' })
+  address: string;
+
+  @Prop({ default: "0000" })
+  pin: string;
+
+  @Prop({ default: true })
+  isActive: boolean;
 }
 
-export const AdminUserSchema = SchemaFactory.createForClass(AdminUser);
+export const AdminUserSchema = SchemaFactory.createForClass(CustomerUser);
