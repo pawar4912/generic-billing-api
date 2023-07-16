@@ -1,24 +1,42 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateAdminUserDto {
   @ApiProperty()
+  @IsNotEmpty({ message: 'First name is required'})
   @IsString()
   firstName: string;
 
   @ApiProperty()
+  @IsNotEmpty({ message: 'Last name is required'})
   @IsString()
   lastName: string;
 
   @ApiProperty()
+  @IsNotEmpty({ message: 'Phone number is required'})
   @IsString()
   cellNumber: string;
 
   @ApiProperty()
+  @IsEmail({}, { message: 'First name is required'})
   @IsString()
   email: string;
 
   @ApiProperty()
+  @IsNotEmpty({ message: 'Password is required'})
   @IsString()
   password: string;
+
+  @ApiProperty()
+  @IsString()
+  address: string;
+
+  @ApiProperty()
+  @IsNotEmpty({ message: 'pin is required'})
+  @IsString()
+  pin: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isActive: boolean;
 }

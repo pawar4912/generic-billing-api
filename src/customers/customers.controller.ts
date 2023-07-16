@@ -33,9 +33,14 @@ export class CustomersController {
     return this.customersService.remove(id);
   }
 
-  @Patch(':id')
-  BlockCustomerDto(@Param('id') id: string, @Body() blockCustomerDto: BlockCustomerDto){
-    return this.customersService.update(id, blockCustomerDto);
+  @Patch('/block/:id')
+  BlockCustomer(@Param('id') id: string){
+    return this.customersService.BlockCustomer(id);
+  }
+
+  @Patch('/unblock/:id')
+  UnblockCustomer(@Param('id') id: string){
+    return this.customersService.UnblockCustomer(id);
   }
 
 }

@@ -70,7 +70,11 @@ export class CustomersService {
 
   //find user by id
   async findOne(id: string) {
-    return this.customerUserModel.findById(id);
+    const customer = this.customerUserModel.findById(id);
+    if(!customer){
+      throw new NotFoundException(`Record not found with id: ${id}`)
+    }
+    return customer
   }
 
   //update user by id 
@@ -89,7 +93,18 @@ export class CustomersService {
   }
 
   //update user by id 
-  async BlockCustomerDto(id: string, updateEmployeeDto: BlockCustomerDto): Promise < CustomerUserDocument > {
-    return this.customerUserModel.findByIdAndUpdate(id, updateEmployeeDto);
+  async BlockCustomer(id: string): Promise < CustomerUserDocument > {
+    const customer = this.customerUserModel.findByIdAndUpdate(id, {isActive: false}, {new: true});
+    if(!customer){
+      throw new NotFoundException(`Record not found with id: ${id}`)
+    }
+    return customer
+  }
+  async UnblockCustomer(id: string): Promise < CustomerUserDocument > {
+    const customer = this.customerUserModel.findByIdAndUpdate(id, {isActive: true}, {new: true});
+    if(!customer){
+      throw new NotFoundException(`Record not found with id: ${id}`)
+    }
+    return customer
   }
 }
